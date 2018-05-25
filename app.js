@@ -53,15 +53,15 @@ function unlinkAllFilesBut(keep){
 	
 	keep = keep || "XXX";
 	
-	fs.readdir('uploads/', (err, files) => {
+	fs.readdir(path+'uploads/', (err, files) => {
 		if (err) {
 			console.log("READ DIR Error",err);
 			return;
 		}
 	    files.forEach(file => {
-		   if (file.startsWith('.') || file.startsWith(keep)){
+		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("Blank")){
 		    } else {
-		    	fs.unlinkSync('uploads/'+file);
+		    	fs.unlinkSync(path+'uploads/'+file);
 		    	console.log("unlinked 'uploads/'/"+file);
 		    }
 		  });
@@ -73,7 +73,7 @@ var ccData;
 unlinkAllFilesBut();
 
 function saveCCdata(content){
-	  fs.open('uploads/'+appState.filename+'.vtt', 'w', (err, fd) => {
+	  fs.open(path+'uploads/'+appState.filename+'.vtt', 'w', (err, fd) => {
 		  if (err) {
 		    if (err.code === 'EEXIST') {
 		      console.error(appState.filename+'.vtt'+' already exists');
@@ -163,7 +163,7 @@ app.post('/submitCCRequest', function (req, res) {
 						"&timePerLine="+req.body.timePerLine+
 						"&suppressHesitations="+(req.body.hesitations?false:true)+
 						"&suppressSpeakerLabels="+(req.body.labels?false:true)+
-						"&filename="+encodeURI('uploads/'+appState.filename);
+						"&filename="+encodeURI(appState.filename);
 	
 	console.log("URL = ",localUrl);
 	console.log(req.body);
