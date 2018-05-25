@@ -59,7 +59,7 @@ function unlinkAllFilesBut(keep){
 			return;
 		}
 	    files.forEach(file => {
-		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("Blank")){
+		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("blank")){
 		    } else {
 		    	fs.unlinkSync(path+'uploads/'+file);
 		    	console.log("unlinked 'uploads/'/"+file);
