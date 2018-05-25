@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>STT Demo</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"
+	type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+	type="text/javascript"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="stylesheets/style.css">
+
+<script>
+	var CC_Data = {};
+
+	//
+	// The main Ajax Function
+	//
+	var ajaxFunction = function(url, datatype, responseFormatter) {
+		var ajaxRequest = {
+
+			// The URL for the request
+			url : url,
+
+			// The data to send (will be converted to a query string)
+			data : JSON.stringify(CC_Data),
+
+			// Whether this is a POST or GET request
+			type : "POST",
+
+			// The type of data we expect back
+			dataType : datatype,
+
+			contentType : 'application/json'
+		}
+
+		$.ajax(ajaxRequest)
+		// Code to run if the request succeeds (is done);
+		// The response is passed to the function
+		.done(function(response) {
+			responseFormatter(response);
+		})
+		// Code to run if the request fails; the raw request and
+		// status codes are passed to the function
+		.fail(function(xhr, status, errorThrown) {
+			console.log("Sorry, there was a problem!");
+			console.log("Error: " + errorThrown);
+			console.log("Status: " + status);
+			console.dir(xhr);
+		})
+		// Code to run regardless of success or failure;
+		.always(function(xhr, status) {
+			console.log("The request is complete!");
+		});
+	};
+
+	//
+	//
+	//
+
+	var getFilename = function getFilename() {
+		ajaxFunction("/api/getCCData", "text", function(json) {
+			console.log(json);
+			$("#textarea").text(json);
+		});
+	}
+
+	var updateCCData = function updateCCData() {
+		ajaxFunction("/api/updateCCData", "text", function(json) {
+			console.log(json);
+		});
+	}
+
+	ajaxFunction("/api/getFilename", "text", function(json) {
+		console.log(json);
+		json = JSON.parse(json);
+		$("#video").attr('src', json.filename);
+		$("#track").attr('src', json.filename + ".vtt");
+	})
+
+	$(function() {
+		console.log("This is the viewResults Page");
+		getFilename();
+
+		$('#updateButton').click(function() {
+			CC_Data = {"data": $("#textarea")[0].value};
+			updateCCData();
+			alert("Please Refresh the Page");
+		});
+
+		$('#backButton').click(function() {
+			window.location.href = "Step2.html";
+		});
+
+	});
+</script>
+</head>
+<body>
+	<h1 id="message">Subtitler - Step 4) Review Transcription</h1>
+
+	<form action="/api/finishCC" method="post" id='uploadForm'
+		action="api/uploadmp4">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-6">
+					<video id="video" width="100%" controls preload="metadata">
+						<source src="" type="video/mp4">
+						<track id="track" label="English" kind="captions" srclang="en"
+							src="uploads/e9150e7f694f8ccdd4b9afeca8306556.vtt" default>
+					</video>
+				</div>
+				<div class="col-xs-6">
+					<textarea id="textarea" name="textarea"><b>My contents are from <u><span
+								style="color: rgb(0, 148, 133);">TEXTAREA</span></u></b></textarea>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-3">
+					<button id="backButton" name="backButton" type="button">Go
+						Back</button>
+				</div>
+				<div class="col-xs-3">
+					<input type="submit" />
+				</div>
+				<div class="col-xs-3"></div>
+				<div class="col-xs-3">
+					<button id="updateButton" name="updateButton" type="button">Update
+						Subtitles</button>
+				</div>
+
+			</div>
+
+		</div>
+
+	</form>
+
+</body>
+</html>

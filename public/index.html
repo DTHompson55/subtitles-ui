@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Subtitler</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"
+	type="text/javascript"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+	type="text/javascript"></script>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="stylesheets/style.css">
+
+
+</head>
+<body>
+	<div class="container">
+		<h1 id="message">Subtitler</h1>
+
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>This Subtitling Service has 5 steps</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Step1 - Submit a video file for processing</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Step2 - Verify correct file and make transcription
+					selections</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Step3 - Wait for Watson to transcribe the file</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Step4 - Review results and make any corrections</h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h2>Step5 - Submit Closed Caption file to Streaming Service</h2>
+			</div>
+		</div>
+		<form method="post" action="/step1">
+			<div class="row">
+				<div class="col-xs-12">
+					<input type="submit" value="Continue to Step 1">
+				</div>
+			</div>
+		</form>
+		<div class="row">
+			<div class="col-xs-12">
+				<h4>Please Note: There is an approximately 10 minute limit for
+					video files in this demo.</h4>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>

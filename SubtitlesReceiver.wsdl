@@ -1,0 +1,55 @@
+<wsdl:definitions xmlns:apachesoap="http://xml.apache.org/xml-soap"
+	xmlns:impl="http://VT01/STTComplete.tws" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:intf="http://VT01/STTComplete.tws"
+	targetNamespace="http://VT01/STTComplete.tws">
+	<wsdl:types>
+		<schema xmlns="http://www.w3.org/2001/XMLSchema"
+			attributeFormDefault="unqualified" elementFormDefault="qualified"
+			targetNamespace="http://VT01/STTComplete.tws">
+			<element name="STT_Results">
+				<complexType>
+					<sequence>
+						<element name="webvtt" type="xsd:string" />
+						<element name="status" type="xsd:string" />
+						<element name="correlationId" type="xsd:string" />
+					</sequence>
+				</complexType>
+			</element>
+			<element name="STT_ResultsResponse">
+				<complexType />
+			</element>
+		</schema>
+	</wsdl:types>
+	<wsdl:message name="STT_ResultsRequest">
+		<wsdl:part name="parameters" element="impl:STT_Results"></wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="STT_ResultsResponse">
+		<wsdl:part name="parameters" element="impl:STT_ResultsResponse"></wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="STTCompletePortType">
+		<wsdl:operation name="STT_Results">
+			<wsdl:input name="STT_ResultsRequest" message="impl:STT_ResultsRequest"></wsdl:input>
+			<wsdl:output name="STT_ResultsResponse" message="impl:STT_ResultsResponse"></wsdl:output>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="soap12STTCompleteSoapSoapBinding"
+		type="impl:STTCompletePortType">
+		<wsdlsoap12:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="STT_Results">
+			<wsdlsoap12:operation soapAction="http://VT01/STTComplete.tws/STT_Results" />
+			<wsdl:input name="STT_ResultsRequest">
+				<wsdlsoap12:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="STT_ResultsResponse">
+				<wsdlsoap12:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="STTComplete">
+		<wsdl:port name="soap12STTCompleteSoap" binding="impl:soap12STTCompleteSoapSoapBinding">
+			<wsdlsoap12:address location="http://localhost:8000/SubtitlesReceiver" />
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

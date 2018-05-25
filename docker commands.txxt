@@ -1,0 +1,6 @@
+Build it
+docker build -t subtitles .
+
+docker run -p 8888:8888 -p 8000:8000 -d subtitles
+
+
