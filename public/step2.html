@@ -73,7 +73,7 @@
 		ajaxFunction("/api/getFilename", "text", function(json) {
 			console.log(json);
 			json = JSON.parse(json);
-			$("#video").attr('src', json.filename);
+			$("#video").attr('src', 'uploads/'+json.filename);
 		})
 	}
 

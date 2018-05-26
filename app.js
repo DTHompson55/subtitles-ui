@@ -63,7 +63,7 @@ function unlinkAllFilesBut(keep){
 		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("blank")){
 		    } else {
 		    	fs.unlinkSync(uploadPath+file);
-		    	console.log("unlinked uploads//"+file);
+		    	console.log("unlinked uploads/"+file);
 		    }
 		  });
 	  }); 
@@ -128,7 +128,7 @@ app.post('/api/updateCCData', function (req, res) {
 
 app.post('/api/finishCC', function (req, res) {
 	saveCCdata(req.body.data);
-	res.redirect(',,/step5.html');
+	res.redirect('../step5.html');
 
 });
 

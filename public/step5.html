@@ -82,8 +82,8 @@
 			json = JSON.parse(json);
 			$("#displayfilename")
 					.text("temporary file name = " + json.filename);
-			$("#video").attr('src', json.filename);
-			$("#track").attr('src', json.filename + ".vtt");
+			$("#video").attr('src', 'uploads/'+json.filename);
+			$("#track").attr('src', 'uploads/'+json.filename + ".vtt");
 		})
 	}
 
