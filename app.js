@@ -62,7 +62,7 @@ function unlinkAllFilesBut(keep){
 		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("blank")){
 		    } else {
 		    	fs.unlinkSync(path+'uploads/'+file);
-		    	console.log("unlinked 'uploads/'/"+file);
+		    	console.log("unlinked uploads//"+file);
 		    }
 		  });
 	  }); 
@@ -139,7 +139,10 @@ app.post('/step1', function (req, res) {
 
 
 app.post('/uploadmp4', upload.single('mp4'), function (req, res, next) {
-	appState.filename = 'uploads/'+req.file.filename;
+	//
+	// FIX this hard coded file path so that it can also run locally
+	//
+	appState.filename = '/data/subtitles-ui/public/uploads/'+req.file.filename;
 	console.log(req.file.filename);
 	
 	const fs = require("fs"); //Load the filesystem module
