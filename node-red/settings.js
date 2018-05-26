@@ -209,6 +209,7 @@ module.exports = {
         // os:require('os'),
         // jfive:require("johnny-five"),
         // j5board:require("johnny-five").Board({repl:false})
+    	'fs' :require('fs')
     },
 
     // The following property can be used to order the categories in the editor
