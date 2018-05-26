@@ -6,6 +6,7 @@ var app = express();
 var appEnv = {port: 8888, soapport: 8000}
 var fileName = "";
 var path = __dirname + '/public/';
+var uploadPath = path+"uploads/";
 var request = require('request');
 var fs = require('fs');
 var soap = require('soap');
@@ -19,7 +20,7 @@ app.use(bodyParser.json());
 
 // get the fileupload capabilities
 var multer = require('multer');
-var upload = multer({ dest: path+'uploads/' });
+var upload = multer({ dest: uploadPath });
 
 
 
@@ -53,7 +54,7 @@ function unlinkAllFilesBut(keep){
 	
 	keep = keep || "XXX";
 	
-	fs.readdir(path+'uploads/', (err, files) => {
+	fs.readdir(uploadPath, (err, files) => {
 		if (err) {
 			console.log("READ DIR Error",err);
 			return;
@@ -61,7 +62,7 @@ function unlinkAllFilesBut(keep){
 	    files.forEach(file => {
 		   if (file.startsWith('.') || file.startsWith(keep) || file.startsWith("blank")){
 		    } else {
-		    	fs.unlinkSync(path+'uploads/'+file);
+		    	fs.unlinkSync(uploadPath+file);
 		    	console.log("unlinked uploads//"+file);
 		    }
 		  });
@@ -73,7 +74,7 @@ var ccData;
 unlinkAllFilesBut();
 
 function saveCCdata(content){
-	  fs.open(path+'uploads/'+appState.filename+'.vtt', 'w', (err, fd) => {
+	  fs.open(uploadPath+appState.filename+'.vtt', 'w', (err, fd) => {
 		  if (err) {
 		    if (err.code === 'EEXIST') {
 		      console.error(appState.filename+'.vtt'+' already exists');
@@ -140,13 +141,14 @@ app.post('/step1', function (req, res) {
 
 app.post('/uploadmp4', upload.single('mp4'), function (req, res, next) {
 	//
-	// FIX this hard coded file path so that it can also run locally
+	// Fhow does appstate filename get used?
 	//
-	appState.filename = '/data/subtitles-ui/public/uploads/'+req.file.filename;
-	console.log(req.file.filename);
+	appState.filename = req.file.filename;
+	
+	console.log("Uploading file "+req.file.filename);
 	
 	const fs = require("fs"); //Load the filesystem module
-	const stats = fs.statSync(path+'uploads/'+req.file.filename);
+	const stats = fs.statSync(uploadPath+req.file.filename);
 	const fileSizeInBytes = stats.size
 	appState.filesizeMB = fileSizeInBytes / 1000000.0;
 	console.log(appState);
@@ -166,7 +168,7 @@ app.post('/submitCCRequest', function (req, res) {
 						"&timePerLine="+req.body.timePerLine+
 						"&suppressHesitations="+(req.body.hesitations?false:true)+
 						"&suppressSpeakerLabels="+(req.body.labels?false:true)+
-						"&filename="+encodeURI(appState.filename);
+						"&filename="+encodeURI(uploadPath+appState.filename);
 	
 	console.log("URL = ",localUrl);
 	console.log(req.body);
