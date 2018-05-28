@@ -24,7 +24,7 @@ module.exports = {
 
 var listenerPort = 8000;
 var callbackFunction = function(args){
-	  console.log("Soap Call default callback: "+args.msgType+" data:"+args.msgCdata);	
+//	  console.log("Soap Call default callback: "+args.msgType+" data:"+args.msgCdata);	
 }
 
 var myService = {
@@ -47,7 +47,7 @@ function listen(app, callback){
 	  callbackFunction = callback;
 	  var wsdl = require('fs').readFileSync('SubtitlesReceiver.wsdl', 'utf8');
 	  soap.listen(app, '/SubtitlesReceiver', myService, wsdl);
-	  console.log("Listening for SOAP1 traffic at /SubtitlesReceiver on port "+listenerPort);
+//	  console.log("Listening for SOAP traffic at /SubtitlesReceiver on port "+listenerPort);
 
 }
 
@@ -67,5 +67,5 @@ function startServer(portNumber, callback){
 	 
 	  server.listen(listenerPort);	  
 	  soap.listen(server, '/SubtitlesReceiver', myService, wsdl);
-	  console.log("Listening for SOAP2 traffic at /SubtitlesReceiver on port "+listenerPort);
+//	  console.log("Listening for SOAP traffic at /SubtitlesReceiver on port "+listenerPort);
 }	 

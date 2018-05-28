@@ -103,7 +103,7 @@ function saveCCdata(content){
 
 
 soapserver.start(appEnv.soapport, function soapCallbackFunction(args){
-	  console.log("SOAP LISTENER GOT A MESSAGE",args);
+//	  console.log("SOAP LISTENER GOT A MESSAGE",args);
 	  saveCCdata(args.webvtt);
 });
 
@@ -113,7 +113,7 @@ var url2 = "http://localhost:1880/api/uploadmp4";
 var url = "http://localhost:1880/api/webvtt";
 
 app.post('/api/getFilename', function (req, res) {
-	console.log("getFilename",appState);
+//	console.log("getFilename",appState);
 	res.send(appState);
 });
 
@@ -134,7 +134,7 @@ app.post('/api/finishCC', function (req, res) {
 
 
 app.post('/step1', function (req, res) {
-	console.log("Index --> Step 1");
+//	console.log("Index --> Step 1");
 	res.redirect('step1.html');
 });
 
@@ -145,13 +145,13 @@ app.post('/uploadmp4', upload.single('mp4'), function (req, res, next) {
 	//
 	appState.filename = req.file.filename;
 	
-	console.log("Uploading file "+req.file.filename);
+//	console.log("Uploading file "+req.file.filename);
 	
 	const fs = require("fs"); //Load the filesystem module
 	const stats = fs.statSync(uploadPath+req.file.filename);
 	const fileSizeInBytes = stats.size
 	appState.filesizeMB = fileSizeInBytes / 1000000.0;
-	console.log(appState);
+//	console.log(appState);
 	
 	unlinkAllFilesBut(req.file.filename);
 	
@@ -170,36 +170,36 @@ app.post('/submitCCRequest', function (req, res) {
 						"&suppressSpeakerLabels="+(req.body.labels?false:true)+
 						"&filename="+encodeURI(uploadPath+appState.filename);
 	
-	console.log("URL = ",localUrl);
-	console.log(req.body);
+//	console.log("URL = ",localUrl);
+//	console.log(req.body);
 	
 	request.get(localUrl, 
 			function optionalCallback(err, httpResponse, body) {
 		  if (err) {
 		    return console.error('upload failed:', err);
 		  }
-		  console.log('Upload successful!  Server responded with:', body);
+//		  console.log('Upload successful!  Server responded with:', body);
 	});
 	
 	res.sendFile(path+"waiting.html");
 });
 
 app.post('/CC', function (req, res) {
-	console.log("requestCC");
+//	console.log("requestCC");
 	res.redirect('step3.html');
 });
 
 app.post('/requestCCback', function (req, res) {
-	console.log("requestCCback");
+//	console.log("requestCCback");
 	res.status(204).end();
 });
 
 app.post('/CCcomplete', function (req, res) {
-	console.log("CCcomplete");
+//	console.log("CCcomplete");
 	res.status(204).end();
 });
 
 app.post('/CCreload', function (req, res) {
-	console.log("CCreload");
+//	console.log("CCreload");
 	res.status(204).end();
 });
